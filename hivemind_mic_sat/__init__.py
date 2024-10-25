@@ -82,10 +82,6 @@ class HiveMindMicrophoneClient:
     def handle_complete(self, message: Message):
         LOG.info("UTTERANCE HANDLED!")
 
-    def get_silence(self, seconds: int):
-        total_silence_size = self.mic.sample_rate * self.mic.sample_width * seconds
-        return b"0" * int(total_silence_size)
-
     def run(self):
         self.running = True
         self.mic.start()

@@ -2,11 +2,17 @@
 
 OpenVoiceOS Microphone Satellite, connect to [HiveMind Listener](https://github.com/JarbasHiveMind/HiveMind-listener)
 
-A super lightweight alternative to [voice-satellite](https://github.com/JarbasHiveMind/HiveMind-voice-sat), only Microphone and VAD plugins runs on the mic-satellite, voice activity is streamed to `hivemind-listener` and all the processing happens there
+A super lightweight version of [voice-satellite](https://github.com/JarbasHiveMind/HiveMind-voice-sat), only Microphone and VAD plugins runs on the mic-satellite, voice activity is streamed to `hivemind-listener` and all the processing happens there
 
 > NOTE: `hivemind-listener` is required server side, the default `hivemind-core` does not provide audio streaming capabilities
 
 ## Install
+
+Install dependencies (if needed)
+
+```bash
+sudo apt-get install -y libpulse-dev libasound2-dev
+```
 
 Install with pip
 
@@ -14,9 +20,10 @@ Install with pip
 $ pip install git+https://github.com/JarbasHiveMind/hivemind-mic-satellite
 ```
 
+
 ## Configuration
 
-Microphone Satellite is built on top of [ovos-plugin-manager](https://github.com/OpenVoiceOS/ovos-plugin-manager), it uses the usual OpenVoiceOS configuration `~/.config/mycroft/mycroft.conf`
+Voice relay is built on top of [ovos-simple-listener](https://github.com/TigreGotico/ovos-simple-listener), it uses the same OpenVoiceOS configuration `~/.config/mycroft/mycroft.conf`
 
 Supported plugins:
 
