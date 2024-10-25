@@ -2,14 +2,13 @@ import base64
 import os.path
 
 from ovos_bus_client.message import Message
-from ovos_microphone_plugin_alsa import AlsaMicrophone
-from ovos_vad_plugin_silero import SileroVAD
-from ovos_plugin_manager.microphone import OVOSMicrophoneFactory, Microphone
-from ovos_plugin_manager.vad import OVOSVADFactory, VADEngine
+
 from hivemind_bus_client.client import HiveMessageBusClient
 from hivemind_bus_client.message import HiveMessage, HiveMessageType
 from hivemind_bus_client.serialization import HiveMindBinaryPayloadType
+from ovos_plugin_manager.microphone import OVOSMicrophoneFactory, Microphone
 from ovos_plugin_manager.utils.tts_cache import hash_sentence
+from ovos_plugin_manager.vad import OVOSVADFactory, VADEngine
 from ovos_utils.fakebus import FakeBus
 from ovos_utils.log import LOG
 from ovos_utils.sound import play_audio
@@ -21,7 +20,7 @@ class HiveMindMicrophoneClient:
         self.hm_bus = HiveMessageBusClient()
         self.hm_bus.connect(FakeBus())
         self.hm_bus.connected_event.wait()
-        print("== connected to HiveMind")
+        LOG.info("== connected to HiveMind")
         self.mic: Microphone = OVOSMicrophoneFactory.create()
         self.vad: VADEngine = OVOSVADFactory.create()
         self.running = False
@@ -83,10 +82,6 @@ class HiveMindMicrophoneClient:
     def handle_complete(self, message: Message):
         LOG.info("UTTERANCE HANDLED!")
 
-    def get_silence(self, seconds: int):
-        total_silence_size = self.mic.sample_rate * self.mic.sample_width * seconds
-        return b"0" * int(total_silence_size)
-
     def run(self):
         self.running = True
         self.mic.start()
@@ -112,30 +107,23 @@ class HiveMindMicrophoneClient:
                     LOG.info("Speech start, initiating audio transmission")
                     in_speech = True
 
+            if in_speech:
                 self.hm_bus.emit(
                     HiveMessage(msg_type=HiveMessageType.BINARY, payload=chunk),
                     binary_type=HiveMindBinaryPayloadType.RAW_AUDIO
                 )
-            # reached the max allowed silence time, stop sending audio
-            elif in_speech and total_silence_duration >= max_silence_duration:
-                in_speech = False
-                LOG.info(f"No speech for {max_silence_duration} seconds, stopping audio transmission")
-                # send silence audio to ensure DinkumVoiceLoop gets enough silence and triggers STT step
-                # otherwise it will hand waiting for extra chunks and never do the actual STT
-                self.hm_bus.emit(
-                    HiveMessage(msg_type=HiveMessageType.BINARY,
-                                payload=self.get_silence(3)),  # pad
-                    binary_type=HiveMindBinaryPayloadType.RAW_AUDIO
-                )
+                # reached the max allowed silence time, stop sending audio
+                if total_silence_duration >= max_silence_duration:
+                    in_speech = False
+                    LOG.info(f"No speech for {max_silence_duration} seconds, stopping audio transmission")
 
         self.running = False
 
 
-def test():
+def run():
     h = HiveMindMicrophoneClient()
-
     h.run()
 
 
 if __name__ == "__main__":
-    test()
+    run()
