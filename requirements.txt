@@ -1,0 +1,2 @@
+hivemind_bus_client
+ovos-plugin-manager

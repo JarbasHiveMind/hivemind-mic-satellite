@@ -120,6 +120,10 @@ class HiveMindMicrophoneClient:
         self.running = False
 
 
-if __name__ == "__main__":
+def run():
     h = HiveMindMicrophoneClient()
     h.run()
+
+
+if __name__ == "__main__":
+    run()
