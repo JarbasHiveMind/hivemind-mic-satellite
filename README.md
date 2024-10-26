@@ -23,10 +23,11 @@ Voice relay is built on top of [ovos-plugin-manager](https://github.com/OpenVoic
 
 Supported plugins:
 
-| Plugin Type | Description | Required | Link |
-|-------------|-------------|----------|------|
-| Microphone | Captures voice input | Yes | [Microphone](https://openvoiceos.github.io/ovos-technical-manual/mic_plugins/) |
-| VAD | Voice Activity Detection | Yes | [VAD](https://openvoiceos.github.io/ovos-technical-manual/vad_plugins/) |
+| Plugin Type | Description                         | Required | Link                                                                           |
+|-------------|-------------------------------------|----------|--------------------------------------------------------------------------------|
+| Microphone  | Captures voice input                | Yes      | [Microphone](https://openvoiceos.github.io/ovos-technical-manual/mic_plugins/) |
+| VAD         | Voice Activity Detection            | Yes      | [VAD](https://openvoiceos.github.io/ovos-technical-manual/vad_plugins/)        |
+| PHAL        | Platform/Hardware Abstraction Layer | No       | [PHAL](https://openvoiceos.github.io/ovos-technical-manual/PHAL/)              |
 
 > NOTE: the mic satellite can not (yet) play media, if you ask OVOS to "play XXX" nothing will happen as the mic-satellite will ignore the received uri
 
