@@ -33,6 +33,13 @@ class HiveMindMicrophoneClient:
         self.hm_bus.on_mycroft("speak", self.handle_speak)
         self.hm_bus.on_mycroft("speak:b64_audio.response", self.handle_speak_b64)
         self.hm_bus.on_mycroft("ovos.utterance.handled", self.handle_complete)
+        try:
+            from ovos_PHAL.service import PHAL
+            self.phal = PHAL(bus=self.hm_bus)
+            self.phal.start()
+        except ImportError:
+            LOG.warning("PHAL is not available")
+            self.phal = None
 
     def handle_stt_error(self, message: Message):
         LOG.error("STT ERROR - transcription failed!")
@@ -118,6 +125,11 @@ class HiveMindMicrophoneClient:
                     LOG.info(f"No speech for {max_silence_duration} seconds, stopping audio transmission")
 
         self.running = False
+
+    def stop(self):
+        self.running = False
+        if self.phal:
+            self.phal.shutdown()
 
 
 def run():

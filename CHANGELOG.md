@@ -1,12 +1,12 @@
 # Changelog
 
-## [0.2.0a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.2.0a1) (2024-10-25)
+## [0.3.0a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.3.0a1) (2024-10-26)
 
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/fb82358fa1493c32676647a2ace2420bc6aa4986...0.2.0a1)
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.2.0...0.3.0a1)
 
 **Merged pull requests:**
 
-- feat:semver [\#1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/1) ([JarbasAl](https://github.com/JarbasAl))
+- feat:phal [\#3](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/3) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
