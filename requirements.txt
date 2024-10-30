@@ -1,2 +1,2 @@
-hivemind_bus_client
-ovos-plugin-manager
+hivemind_bus_client>=0.1.0,<1.0.0
+ovos-plugin-manager<1.0.0
