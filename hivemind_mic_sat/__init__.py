@@ -68,7 +68,12 @@ class HiveMindMicrophoneClient:
         self.vad: VADEngine = OVOSVADFactory.create()
         self.audio: Optional[AudioService] = None
         if enable_media:
-            self.audio = AudioService(bus=internal, validate_source=False)
+            try:
+                self.audio = AudioService(bus=internal, validate_source=False)
+                LOG.info("Media playback support enabled")
+            except Exception as e:
+                LOG.error(f"Failed to initialize AudioService: {e}")
+                LOG.warning("Media playback support will be disabled")
         self.running = False
         self.hm_bus.on_mycroft("recognizer_loop:wakeword", self.handle_ww)
         self.hm_bus.on_mycroft("recognizer_loop:record_begin", self.handle_rec_start)
