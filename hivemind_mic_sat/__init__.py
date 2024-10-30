@@ -1,26 +1,26 @@
 import base64
 import os.path
+from queue import Queue
 from typing import Optional, List
+
 from ovos_bus_client.message import Message
 
 from hivemind_bus_client.client import HiveMessageBusClient, BinaryDataCallbacks
 from hivemind_bus_client.message import HiveMessage, HiveMessageType
 from hivemind_bus_client.serialization import HiveMindBinaryPayloadType
+from ovos_audio.playback import PlaybackThread as _PT
 from ovos_plugin_manager.microphone import OVOSMicrophoneFactory, Microphone
 from ovos_plugin_manager.utils.tts_cache import hash_sentence
 from ovos_plugin_manager.vad import OVOSVADFactory, VADEngine
 from ovos_utils.fakebus import FakeBus
 from ovos_utils.log import LOG
 from ovos_utils.sound import play_audio
-from ovos_audio.playback import PlaybackThread as _PT
-
-from queue import Queue
 
 
 class PlaybackThread(_PT):
     # TODO - send PR to ovos-audio adding util method
     def put(self, wav: str,
-            visemes: Optional[List[str]]=None,
+            visemes: Optional[List[str]] = None,
             listen: bool = False,
             tts_id: Optional[str] = None,
             message: Optional[Message] = None):
@@ -57,9 +57,8 @@ class HiveMindMicrophoneClient:
         self.prefer_b64 = prefer_b64
         internal = FakeBus()
 
-        self.queue = Queue()
         self.playback: PlaybackThread = PlaybackThread(bus=internal,
-                                                       queue=self.queue)
+                                                       queue=Queue())
 
         self.hm_bus = HiveMessageBusClient(bin_callbacks=TTSHandler(self.playback),
                                            internal_bus=internal)
