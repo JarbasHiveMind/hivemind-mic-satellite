@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.4.0a1) (2024-10-30)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.3.0a1...0.4.0a1)
+
+**Merged pull requests:**
+
+- feat:binary handlers [\#5](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/5) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.3.0a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.3.0a1) (2024-10-26)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.2.0...0.3.0a1)
