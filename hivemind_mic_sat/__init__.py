@@ -8,6 +8,7 @@ from ovos_bus_client.message import Message
 from hivemind_bus_client.client import HiveMessageBusClient, BinaryDataCallbacks
 from hivemind_bus_client.message import HiveMessage, HiveMessageType
 from hivemind_bus_client.serialization import HiveMindBinaryPayloadType
+from ovos_audio.audio import AudioService
 from ovos_audio.playback import PlaybackThread as _PT
 from ovos_plugin_manager.microphone import OVOSMicrophoneFactory, Microphone
 from ovos_plugin_manager.utils.tts_cache import hash_sentence
@@ -53,13 +54,11 @@ class TTSHandler(BinaryDataCallbacks):
 
 class HiveMindMicrophoneClient:
 
-    def __init__(self, prefer_b64=False):
+    def __init__(self, prefer_b64=False, enable_media=True):
         self.prefer_b64 = prefer_b64
         internal = FakeBus()
-
         self.playback: PlaybackThread = PlaybackThread(bus=internal,
                                                        queue=Queue())
-
         self.hm_bus = HiveMessageBusClient(bin_callbacks=TTSHandler(self.playback),
                                            internal_bus=internal)
         self.hm_bus.connect(FakeBus())
@@ -67,6 +66,14 @@ class HiveMindMicrophoneClient:
         LOG.info("== connected to HiveMind")
         self.mic: Microphone = OVOSMicrophoneFactory.create()
         self.vad: VADEngine = OVOSVADFactory.create()
+        self.audio: Optional[AudioService] = None
+        if enable_media:
+            try:
+                self.audio = AudioService(bus=internal, validate_source=False)
+                LOG.info("Media playback support enabled")
+            except Exception as e:
+                LOG.error(f"Failed to initialize AudioService: {e}")
+                LOG.warning("Media playback support will be disabled")
         self.running = False
         self.hm_bus.on_mycroft("recognizer_loop:wakeword", self.handle_ww)
         self.hm_bus.on_mycroft("recognizer_loop:record_begin", self.handle_rec_start)
