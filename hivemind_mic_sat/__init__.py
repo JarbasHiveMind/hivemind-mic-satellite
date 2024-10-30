@@ -1,6 +1,6 @@
 import base64
 import os.path
-
+from typing import Optional, List
 from ovos_bus_client.message import Message
 
 from hivemind_bus_client.client import HiveMessageBusClient, BinaryDataCallbacks
@@ -12,9 +12,30 @@ from ovos_plugin_manager.vad import OVOSVADFactory, VADEngine
 from ovos_utils.fakebus import FakeBus
 from ovos_utils.log import LOG
 from ovos_utils.sound import play_audio
+from ovos_audio.playback import PlaybackThread as _PT
+
+from queue import Queue
+
+
+class PlaybackThread(_PT):
+    # TODO - send PR to ovos-audio adding util method
+    def put(self, wav: str,
+            visemes: Optional[List[str]]=None,
+            listen: bool = False,
+            tts_id: Optional[str] = None,
+            message: Optional[Message] = None):
+        message = message or Message("")
+        # queue audio for playback
+        self.queue.put(
+            (wav, visemes, listen, tts_id, message)
+        )
 
 
 class TTSHandler(BinaryDataCallbacks):
+    def __init__(self, playback: PlaybackThread):
+        self.playback: PlaybackThread = playback
+        super().__init__()
+
     def handle_receive_tts(self, bin_data: bytes,
                            utterance: str,
                            lang: str,
@@ -23,14 +44,25 @@ class TTSHandler(BinaryDataCallbacks):
         wav = f"/tmp/{file_name}"
         with open(wav, "wb") as f:
             f.write(bin_data)
-        play_audio(wav)
+
+        # queue audio for playback
+        m = Message("speak", {"utterance": utterance, "lang": lang})
+        # message is optional, allows G2P plugin to create mouth movements if configured
+        self.playback.put(wav, message=m)
 
 
 class HiveMindMicrophoneClient:
 
     def __init__(self, prefer_b64=False):
         self.prefer_b64 = prefer_b64
-        self.hm_bus = HiveMessageBusClient(bin_callbacks=TTSHandler())
+        internal = FakeBus()
+
+        self.queue = Queue()
+        self.playback: PlaybackThread = PlaybackThread(bus=internal,
+                                                       queue=self.queue)
+
+        self.hm_bus = HiveMessageBusClient(bin_callbacks=TTSHandler(self.playback),
+                                           internal_bus=internal)
         self.hm_bus.connect(FakeBus())
         self.hm_bus.connected_event.wait()
         LOG.info("== connected to HiveMind")
@@ -65,9 +97,9 @@ class HiveMindMicrophoneClient:
                 resolved = f"{os.path.dirname(__file__)}/res/{uri}"
                 if os.path.isfile(resolved):
                     uri = resolved
-                else:
-                    LOG.error(f"unknown sound file {uri}")
-                    return
+        if not os.path.isfile(uri):
+            LOG.error(f"unknown sound file: {uri}")
+            return
         play_audio(uri)
 
     def handle_ww(self, message: Message):
@@ -99,8 +131,9 @@ class HiveMindMicrophoneClient:
         with open(audio_file, "wb") as f:
             f.write(base64.b64decode(b64data))
         LOG.info(f"TTS: {audio_file}")
-        play_audio(audio_file)
-        LOG.debug("TTS playback finished")
+        self.playback.put(audio_file,
+                          listen=message.data.get("listen"),
+                          message=message)
 
     def handle_complete(self, message: Message):
         LOG.info("UTTERANCE HANDLED!")
@@ -108,6 +141,7 @@ class HiveMindMicrophoneClient:
     def run(self):
         self.running = True
         self.mic.start()
+        self.playback.start()
 
         chunk_duration = self.mic.chunk_size / self.mic.sample_rate  # time (in seconds) per chunk
         total_silence_duration = 0.0  # in seconds
@@ -146,6 +180,8 @@ class HiveMindMicrophoneClient:
         self.running = False
         if self.phal:
             self.phal.shutdown()
+        self.playback.shutdown()
+        self.mic.stop()
 
 
 def run():
