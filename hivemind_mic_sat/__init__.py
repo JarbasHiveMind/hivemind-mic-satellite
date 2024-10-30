@@ -3,7 +3,7 @@ import os.path
 
 from ovos_bus_client.message import Message
 
-from hivemind_bus_client.client import HiveMessageBusClient
+from hivemind_bus_client.client import HiveMessageBusClient, BinaryDataCallbacks
 from hivemind_bus_client.message import HiveMessage, HiveMessageType
 from hivemind_bus_client.serialization import HiveMindBinaryPayloadType
 from ovos_plugin_manager.microphone import OVOSMicrophoneFactory, Microphone
@@ -14,10 +14,23 @@ from ovos_utils.log import LOG
 from ovos_utils.sound import play_audio
 
 
+class TTSHandler(BinaryDataCallbacks):
+    def handle_receive_tts(self, bin_data: bytes,
+                           utterance: str,
+                           lang: str,
+                           file_name: str):
+        LOG.info(f"Received TTS: {file_name}")
+        wav = f"/tmp/{file_name}"
+        with open(wav, "wb") as f:
+            f.write(bin_data)
+        play_audio(wav)
+
+
 class HiveMindMicrophoneClient:
 
-    def __init__(self):
-        self.hm_bus = HiveMessageBusClient()
+    def __init__(self, prefer_b64=False):
+        self.prefer_b64 = prefer_b64
+        self.hm_bus = HiveMessageBusClient(bin_callbacks=TTSHandler())
         self.hm_bus.connect(FakeBus())
         self.hm_bus.connected_event.wait()
         LOG.info("== connected to HiveMind")
@@ -71,9 +84,12 @@ class HiveMindMicrophoneClient:
 
     def handle_speak(self, message: Message):
         LOG.info(f"SPEAK: {message.data['utterance']}")
-        m = message.reply("speak:b64_audio", message.data)
+        if self.prefer_b64:
+            m = message.reply("speak:b64_audio", message.data)
+        else:
+            m = message.reply("speak:synth", message.data)
         self.hm_bus.emit(HiveMessage(HiveMessageType.BUS, payload=m))
-        LOG.debug("Requested base64 encoded TTS audio")
+        LOG.debug("Requested TTS audio")
 
     def handle_speak_b64(self, message: Message):
         LOG.debug("TTS base64 encoded audio received")  # TODO - support binary transport too
@@ -97,7 +113,7 @@ class HiveMindMicrophoneClient:
         total_silence_duration = 0.0  # in seconds
         in_speech = False
         max_silence_duration = 6  # silence duration limit in seconds
-
+        LOG.info("Listener Loop Started")
         while self.running:
             chunk = self.mic.read_chunk()
             if chunk is None:
