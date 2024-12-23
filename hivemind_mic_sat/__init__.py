@@ -1,4 +1,4 @@
-import base64
+import pybase64
 import os.path
 from queue import Queue
 from typing import Optional, List
@@ -137,7 +137,7 @@ class HiveMindMicrophoneClient:
         utt = message.data["utterance"]
         audio_file = f"/tmp/{hash_sentence(utt)}.wav"
         with open(audio_file, "wb") as f:
-            f.write(base64.b64decode(b64data))
+            f.write(pybase64.b64decode(b64data))
         LOG.info(f"TTS: {audio_file}")
         self.playback.put(audio_file,
                           listen=message.data.get("listen"),
