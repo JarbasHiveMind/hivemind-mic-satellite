@@ -1,21 +1,23 @@
-import base64
+import pybase64
 import os.path
 from queue import Queue
 from typing import Optional, List
 
-from ovos_bus_client.message import Message
-
-from hivemind_bus_client.client import HiveMessageBusClient, BinaryDataCallbacks
-from hivemind_bus_client.message import HiveMessage, HiveMessageType
-from hivemind_bus_client.serialization import HiveMindBinaryPayloadType
+import click
 from ovos_audio.audio import AudioService
 from ovos_audio.playback import PlaybackThread as _PT
+from ovos_bus_client.message import Message
 from ovos_plugin_manager.microphone import OVOSMicrophoneFactory, Microphone
 from ovos_plugin_manager.utils.tts_cache import hash_sentence
 from ovos_plugin_manager.vad import OVOSVADFactory, VADEngine
 from ovos_utils.fakebus import FakeBus
 from ovos_utils.log import LOG
 from ovos_utils.sound import play_audio
+
+from hivemind_bus_client.client import HiveMessageBusClient, BinaryDataCallbacks
+from hivemind_bus_client.identity import NodeIdentity
+from hivemind_bus_client.message import HiveMessage, HiveMessageType
+from hivemind_bus_client.serialization import HiveMindBinaryPayloadType
 
 
 class PlaybackThread(_PT):
@@ -54,13 +56,13 @@ class TTSHandler(BinaryDataCallbacks):
 
 class HiveMindMicrophoneClient:
 
-    def __init__(self, prefer_b64=False, enable_media=True):
+    def __init__(self, prefer_b64=False, enable_media=True, **kwargs):
         self.prefer_b64 = prefer_b64
         internal = FakeBus()
         self.playback: PlaybackThread = PlaybackThread(bus=internal,
                                                        queue=Queue())
         self.hm_bus = HiveMessageBusClient(bin_callbacks=TTSHandler(self.playback),
-                                           internal_bus=internal)
+                                           internal_bus=internal, **kwargs)
         self.hm_bus.connect(FakeBus())
         self.hm_bus.connected_event.wait()
         LOG.info("== connected to HiveMind")
@@ -135,7 +137,7 @@ class HiveMindMicrophoneClient:
         utt = message.data["utterance"]
         audio_file = f"/tmp/{hash_sentence(utt)}.wav"
         with open(audio_file, "wb") as f:
-            f.write(base64.b64decode(b64data))
+            f.write(pybase64.b64decode(b64data))
         LOG.info(f"TTS: {audio_file}")
         self.playback.put(audio_file,
                           listen=message.data.get("listen"),
@@ -190,8 +192,30 @@ class HiveMindMicrophoneClient:
         self.mic.stop()
 
 
-def run():
-    h = HiveMindMicrophoneClient()
+@click.command()
+@click.option("--key", help="HiveMind access key (default read from identity file)", type=str, default="")
+@click.option("--password", help="HiveMind password (default read from identity file)", type=str, default="")
+@click.option("--host", help="HiveMind host (default read from identity file)", type=str, default="")
+@click.option("--port", help="HiveMind port number (default read from identity file or 5678)", type=int, required=False)
+@click.option("--siteid", help="location identifier for message.context  (default read from identity file)", type=str,
+              default="")
+def run(key: str, password: str, host: str, port: int, siteid: str):
+    identity = NodeIdentity()
+    password = password or identity.password
+    key = key or identity.access_key
+    host = host or identity.default_master
+    identity.siteid = siteid or identity.site_id or "unknown"
+    port = port or identity.default_port or 5678
+
+    if not host.startswith("ws://") and not host.startswith("wss://"):
+        host = "ws://" + host
+
+    if not key or not password or not host:
+        raise RuntimeError("NodeIdentity not set, please pass key/password/host or "
+                           "call 'hivemind-client set-identity'")
+
+    h = HiveMindMicrophoneClient(key=key, host=host, port=port,
+                                 password=password, identity=identity)
     h.run()
 
 
