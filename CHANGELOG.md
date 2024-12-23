@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.0a2](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.0a2) (2024-12-23)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.0a1...0.7.0a2)
+
+**Merged pull requests:**
+
+- performance: speed up b64 operations [\#13](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/13) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.7.0a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.0a1) (2024-12-21)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.6.0...0.7.0a1)
