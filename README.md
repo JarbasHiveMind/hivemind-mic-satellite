@@ -1,3 +1,5 @@
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/JarbasHiveMind/hivemind-mic-satellite)
+
 # HiveMind Microphone Satellite
 
 OpenVoiceOS Microphone Satellite, connect to [HiveMind Listener](https://github.com/JarbasHiveMind/HiveMind-listener)
@@ -6,7 +8,7 @@ A super lightweight version of [voice-satellite](https://github.com/JarbasHiveMi
 
 ## Server requirements
 
-> ⚠️ `hivemind-listener` is required server side, the default `hivemind-core` does not provide STT and TTS capabilities.
+> ⚠️ [hivemind-audio-binary-protocol](https://github.com/JarbasHiveMind/hivemind-audio-binary-protocol) is required server side, the default `hivemind-core` does not provide STT and TTS capabilities.
 
 ## Install
 
