@@ -2,9 +2,9 @@
 
 # HiveMind Microphone Satellite
 
-OpenVoiceOS Microphone Satellite, connect to [HiveMind Listener](https://github.com/JarbasHiveMind/HiveMind-listener)
+OpenVoiceOS Microphone Satellite, connect to [HiveMind](https://github.com/JarbasHiveMind/HiveMind-core)
 
-A super lightweight version of [voice-satellite](https://github.com/JarbasHiveMind/HiveMind-voice-sat), only Microphone and VAD plugins runs on the mic-satellite, voice activity is streamed to `hivemind-listener` and all the processing happens there
+A super lightweight version of [voice-satellite](https://github.com/JarbasHiveMind/HiveMind-voice-sat), only Microphone and VAD plugins runs on the mic-satellite, voice activity is streamed to `hivemind-core` and all the processing happens there
 
 ## Server requirements
 
