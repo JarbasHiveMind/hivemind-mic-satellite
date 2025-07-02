@@ -39,7 +39,6 @@ def required(requirements_file):
             ]
         return [pkg for pkg in requirements if pkg.strip() and not pkg.startswith("#")]
 
-
 setup(
     name="hivemind-mic-satellite",
     version=get_version(),
@@ -53,5 +52,11 @@ setup(
     description="Remote microphone for HiveMind",
     entry_points={
         "console_scripts": ["hivemind-mic-sat=hivemind_mic_sat:run"]
+    },
+    package_data={
+        "hivemind_mic_sat": [
+            "res/snd/*.wav",
+            "res/snd/*.mp3",
+        ]
     },
 )
