@@ -54,6 +54,9 @@ setup(
         "console_scripts": ["hivemind-mic-sat=hivemind_mic_sat:run"]
     },
     package_data={
-        "hivemind-mic-satellite": ["hivemind_mic_sat/res/snd/*.wav", "hivemind_mic_sat/res/snd/*.mp3"]
+        "hivemind_mic_sat": [
+            "res/snd/*.wav",
+            "res/snd/*.mp3",
+        ]
     },
 )
