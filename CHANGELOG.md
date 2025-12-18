@@ -1,12 +1,12 @@
 # Changelog
 
-## [0.7.1a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.1a1) (2025-07-02)
+## [0.7.2a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.2a1) (2025-12-18)
 
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.0...0.7.1a1)
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.1...0.7.2a1)
 
 **Merged pull requests:**
 
-- Including voice files in pypi distribution. [\#15](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/15) ([ser](https://github.com/ser))
+- chore: Configure Renovate [\#17](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/17) ([renovate[bot]](https://github.com/apps/renovate))
 
 
 
