@@ -6,6 +6,7 @@
 
 **Merged pull requests:**
 
+- chore\(deps\): update dependency ovos-audio to v1 [\#23](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/23) ([renovate[bot]](https://github.com/apps/renovate))
 - chore\(deps\): update actions/setup-python action to v6 [\#22](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/22) ([renovate[bot]](https://github.com/apps/renovate))
 
 ## [0.7.2a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.2a1) (2025-12-18)
