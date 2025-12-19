@@ -1,12 +1,33 @@
 # Changelog
 
-## [0.7.1a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.1a1) (2025-07-02)
+## [0.7.2a4](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.2a4) (2025-12-19)
 
-[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.0...0.7.1a1)
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.2a3...0.7.2a4)
 
 **Merged pull requests:**
 
-- Including voice files in pypi distribution. [\#15](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/15) ([ser](https://github.com/ser))
+- chore\(deps\): update dependency ovos-plugin-manager to v2 [\#25](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/25) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [0.7.2a3](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.2a3) (2025-12-19)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.2a2...0.7.2a3)
+
+## [0.7.2a2](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.2a2) (2025-12-19)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.2a1...0.7.2a2)
+
+**Merged pull requests:**
+
+- chore\(deps\): update dependency ovos-audio to v1 [\#23](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/23) ([renovate[bot]](https://github.com/apps/renovate))
+- chore\(deps\): update actions/setup-python action to v6 [\#22](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/22) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [0.7.2a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.2a1) (2025-12-18)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.1...0.7.2a1)
+
+**Merged pull requests:**
+
+- chore: Configure Renovate [\#17](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/17) ([renovate[bot]](https://github.com/apps/renovate))
 
 
 
