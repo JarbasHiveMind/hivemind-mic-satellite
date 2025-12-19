@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.2a4](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.2a4) (2025-12-19)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.2a3...0.7.2a4)
+
+**Merged pull requests:**
+
+- chore\(deps\): update dependency ovos-plugin-manager to v2 [\#25](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/25) ([renovate[bot]](https://github.com/apps/renovate))
+
+## [0.7.2a3](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.2a3) (2025-12-19)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.2a2...0.7.2a3)
+
 ## [0.7.2a2](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.2a2) (2025-12-19)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.2a1...0.7.2a2)
