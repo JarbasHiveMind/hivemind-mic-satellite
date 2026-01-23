@@ -58,6 +58,21 @@ class TTSHandler(BinaryDataCallbacks):
 class HiveMindMicrophoneClient:
 
     def __init__(self, prefer_b64=False, enable_media=True, **kwargs):
+        """
+        Initialize the HiveMindMicrophoneClient: configure messaging, playback, microphone, VAD, optional media service, event handlers, and auxiliary services.
+        
+        Parameters:
+            prefer_b64 (bool): If True, prefer base64-encoded audio for TTS responses.
+            enable_media (bool): If True, attempt to initialize an AudioService for media playback; failure disables media support.
+            **kwargs: Additional keyword arguments forwarded to the HiveMessageBusClient constructor (e.g., connection credentials and identity).
+        
+        Notes:
+            - Creates an internal FakeBus bound to a Session and a PlaybackThread for local audio playback.
+            - Instantiates a HiveMessageBusClient with a TTS handler and waits for it to connect.
+            - Creates microphone and VAD engine instances and registers handlers for recognizer, TTS, playback, and utterance events.
+            - Attempts to initialize PHAL and starts it if available; if PHAL is not importable it is set to None.
+            - Sets instance attributes: prefer_b64, playback, hm_bus, mic, vad, audio, running, and phal.
+        """
         self.prefer_b64 = prefer_b64
         internal = FakeBus(session=Session())
         self.playback: PlaybackThread = PlaybackThread(bus=internal,
