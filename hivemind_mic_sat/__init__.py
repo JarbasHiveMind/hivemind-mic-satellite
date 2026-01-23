@@ -7,6 +7,7 @@ import click
 from ovos_audio.audio import AudioService
 from ovos_audio.playback import PlaybackThread as _PT
 from ovos_bus_client.message import Message
+from ovos_bus_client.session import Session
 from ovos_plugin_manager.microphone import OVOSMicrophoneFactory, Microphone
 from ovos_plugin_manager.utils.tts_cache import hash_sentence
 from ovos_plugin_manager.vad import OVOSVADFactory, VADEngine
@@ -58,12 +59,12 @@ class HiveMindMicrophoneClient:
 
     def __init__(self, prefer_b64=False, enable_media=True, **kwargs):
         self.prefer_b64 = prefer_b64
-        internal = FakeBus()
+        internal = FakeBus(session=Session())
         self.playback: PlaybackThread = PlaybackThread(bus=internal,
                                                        queue=Queue())
         self.hm_bus = HiveMessageBusClient(bin_callbacks=TTSHandler(self.playback),
                                            internal_bus=internal, **kwargs)
-        self.hm_bus.connect(FakeBus())
+        self.hm_bus.connect()
         self.hm_bus.connected_event.wait()
         LOG.info("== connected to HiveMind")
         self.mic: Microphone = OVOSMicrophoneFactory.create()
