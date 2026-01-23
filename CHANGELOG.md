@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.3a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.3a1) (2026-01-23)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.2a5...0.7.3a1)
+
+**Merged pull requests:**
+
+- fix: ensure unique session\_id [\#29](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/29) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.7.2a5](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.2a5) (2026-01-09)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.2a4...0.7.2a5)
