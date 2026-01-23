@@ -1,5 +1,5 @@
 hivemind_bus_client>=0.1.0,<1.0.0
-ovos-plugin-manager<3.0.0
-ovos-audio<1.1.2
+ovos-plugin-manager>=1.0.0,<3.0.0
+ovos-audio>=1.0.0,<2.0.0
 click
 pybase64
