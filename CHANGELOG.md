@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.3a2](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.3a2) (2026-01-23)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.3a1...0.7.3a2)
+
+**Merged pull requests:**
+
+- chore\(deps\): update dependency ovos-audio to \<1.1.2 [\#32](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/32) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.7.3a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.3a1) (2026-01-23)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.2a5...0.7.3a1)
