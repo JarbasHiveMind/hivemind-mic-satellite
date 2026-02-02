@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.3a3](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.3a3) (2026-02-02)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.3a2...0.7.3a3)
+
+**Merged pull requests:**
+
+- chore\(deps\): update actions/checkout action to v6 [\#20](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/20) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.7.3a2](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.3a2) (2026-01-23)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.3a1...0.7.3a2)
