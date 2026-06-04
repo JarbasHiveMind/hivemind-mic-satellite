@@ -100,7 +100,7 @@ def test_skill_blacklist_injection():
     strict=False,
     reason=(
         "SESSION_ID_DEFAULT_FORBIDDEN enforcement not yet wired in "
-        "hivescope@fix/acl-resolve-user; re-enable once "
+        "hivescope==0.2.2a1; re-enable once "
         "JarbasHiveMind/hivescope#<issue> lands in dev."
     ),
 )
