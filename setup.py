@@ -45,6 +45,15 @@ setup(
     packages=["hivemind_mic_sat"],
     include_package_data=True,
     install_requires=required("requirements.txt"),
+    extras_require={
+        # hivescope pin: revert to released hivescope once
+        # JarbasHiveMind/hivescope@fix/acl-resolve-user merges to dev/main
+        "test": [
+            "pytest",
+            "pytest-timeout",
+            "hivescope @ git+https://github.com/JarbasHiveMind/hivescope@fix/acl-resolve-user",
+        ],
+    },
     url="https://github.com/JarbasHiveMind/hivemind-mic-satellite",
     license="Apache2.0",
     author="jarbasAI",
