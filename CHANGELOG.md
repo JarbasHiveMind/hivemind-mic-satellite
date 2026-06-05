@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.0a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.8.0a1) (2026-06-05)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.3a3...0.8.0a1)
+
+**Merged pull requests:**
+
+- feat: modernize deps + ACL policy e2e tests [\#36](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/36) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.7.3a3](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.7.3a3) (2026-02-02)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.7.3a2...0.7.3a3)
