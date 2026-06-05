@@ -15,8 +15,8 @@ Audio is streamed from this device to a [HiveMind](https://github.com/JarbasHive
 | Satellite | Mic | VAD | Wakeword | STT | TTS | Best for |
 |---|---|---|---|---|---|---|
 | [HiveMind-cli](https://github.com/JarbasHiveMind/HiveMind-cli) | — | — | — | — | — | Text-only (keyboard/script) |
-| **hivemind-mic-satellite** (this repo) | local | local | **server** | **server** | **server** | Cheapest HW, zero local models |
-| [HiveMind-voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay) | local | local | local | **server** | **server** | Mid-range: local wakeword |
+| **hivemind-mic-satellite** (this repo) | local | local | **server** | **server** | **server** | Cheapest HW / homelab; no local models |
+| [HiveMind-voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay) | local | local | local | **server** | **server** | Local wakeword; scales as a service |
 | [HiveMind-voice-sat](https://github.com/JarbasHiveMind/HiveMind-voice-sat) | local | local | local | local | local | Full local stack, sends text |
 
 ---
@@ -25,6 +25,14 @@ Audio is streamed from this device to a [HiveMind](https://github.com/JarbasHive
 
 > **Important:** The default `hivemind-core` does not include audio processing.  
 > You need [hivemind-audio-binary-protocol](https://github.com/JarbasHiveMind/hivemind-audio-binary-protocol) installed server-side to enable server-side wakeword, STT, and TTS.
+
+---
+
+## Why mic-satellite — and when not to
+
+mic-satellite exists for one reason: **device resources**. With only a microphone and VAD on-device, it runs on the cheapest hardware (a Raspberry Pi Zero, a recycled phone) with zero local models. Everything else — wakeword, STT, intent, TTS — is **owned by the hive** and gated behind the same access-key authentication as the rest of the mesh. The hive operator decides the engines, models, and voice, uniformly; a satellite cannot override them. (Same ownership model as [voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay) — see its docs for the "HiveMind as a service" framing.)
+
+**The trade-off, and the limit.** Because there is no local wakeword, the satellite streams **every** detected voice segment upstream (VAD-gated, but not gated by a wakeword). That continuous audio stream is bandwidth-heavy and puts the full STT load on the server for *all* speech, not just commands. It is the right call for a **homelab with a handful of personal devices**, where on-device resources are the binding constraint. It does **not** scale for **HiveMind-as-a-service** across many tenants — streaming raw audio per client is too costly. For a scalable, service-style deployment, prefer [voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay): local wakeword means audio only leaves the device after activation.
 
 ---
 
