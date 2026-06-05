@@ -7,6 +7,7 @@ import click
 from ovos_audio.audio import AudioService
 from ovos_audio.playback import PlaybackThread as _PT
 from ovos_bus_client.message import Message
+from ovos_bus_client.session import Session
 from ovos_plugin_manager.microphone import OVOSMicrophoneFactory, Microphone
 from ovos_plugin_manager.utils.tts_cache import hash_sentence
 from ovos_plugin_manager.vad import OVOSVADFactory, VADEngine
@@ -57,13 +58,28 @@ class TTSHandler(BinaryDataCallbacks):
 class HiveMindMicrophoneClient:
 
     def __init__(self, prefer_b64=False, enable_media=True, **kwargs):
+        """
+        Initialize the HiveMindMicrophoneClient: configure messaging, playback, microphone, VAD, optional media service, event handlers, and auxiliary services.
+        
+        Parameters:
+            prefer_b64 (bool): If True, prefer base64-encoded audio for TTS responses.
+            enable_media (bool): If True, attempt to initialize an AudioService for media playback; failure disables media support.
+            **kwargs: Additional keyword arguments forwarded to the HiveMessageBusClient constructor (e.g., connection credentials and identity).
+        
+        Notes:
+            - Creates an internal FakeBus bound to a Session and a PlaybackThread for local audio playback.
+            - Instantiates a HiveMessageBusClient with a TTS handler and waits for it to connect.
+            - Creates microphone and VAD engine instances and registers handlers for recognizer, TTS, playback, and utterance events.
+            - Attempts to initialize PHAL and starts it if available; if PHAL is not importable it is set to None.
+            - Sets instance attributes: prefer_b64, playback, hm_bus, mic, vad, audio, running, and phal.
+        """
         self.prefer_b64 = prefer_b64
-        internal = FakeBus()
+        internal = FakeBus(session=Session())
         self.playback: PlaybackThread = PlaybackThread(bus=internal,
                                                        queue=Queue())
         self.hm_bus = HiveMessageBusClient(bin_callbacks=TTSHandler(self.playback),
                                            internal_bus=internal, **kwargs)
-        self.hm_bus.connect(FakeBus())
+        self.hm_bus.connect()
         self.hm_bus.connected_event.wait()
         LOG.info("== connected to HiveMind")
         self.mic: Microphone = OVOSMicrophoneFactory.create()
