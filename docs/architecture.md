@@ -48,6 +48,10 @@ The entire on-device processing pipeline is:
 
 ---
 
+## Scaling: homelab vs service
+
+There is no local wakeword on mic-satellite, so the VAD ships **every** speech segment to the hive — not just post-activation commands. That keeps the device trivially cheap but makes the upstream a continuous raw-audio stream, with the server bearing the full STT cost for all speech. This is fine for a **homelab with a few personal devices**. It does **not** scale for a multi-tenant **HiveMind-as-a-service** offering: per-client raw-audio streaming is too bandwidth- and compute-heavy. A [voice-relay](https://github.com/JarbasHiveMind/HiveMind-voice-relay) device, which only streams after a local wakeword fires, is the service-appropriate pattern. Both delegate STT/TTS to the hive (owned, authenticated); they differ in *how much* audio crosses the wire and therefore in how they scale.
+
 ## TTS playback path
 
 When the hive sends a `speak` message:
