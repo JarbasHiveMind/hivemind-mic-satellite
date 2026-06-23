@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hivemind-mic-satellite"
+description = "Remote microphone for HiveMind"
+readme = "README.md"
+authors = [{ name = "jarbasAI", email = "jarbasai@mailfence.com" }]
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+dynamic = ["version", "dependencies"]
+
+[project.optional-dependencies]
+# Test/e2e deps. Pinned to the bus-client 1.x world: the satellite's ovos-audio
+# runtime deps require ovos-bus-client<2.0.0, so core and the agent plugin stay
+# on their last 1.x-compatible alphas (the 2.x successors require
+# ovos-bus-client>=2.0.0a3 and would conflict). hivescope 0.5.0a2 resolves on
+# 1.x via hivemind-bus-client 0.9.1a1. Bump once ovos-audio supports
+# ovos-bus-client 2.x.
+test = [
+    "pytest",
+    "pytest-timeout",
+    "hivescope==0.5.0a2",
+    "hivemind-core==4.3.0a2",
+    "hivemind-ovos-agent-plugin==0.2.0a1",
+    "hivemind-plugin-manager==0.6.0a1",
+]
+
+[project.urls]
+Homepage = "https://github.com/JarbasHiveMind/hivemind-mic-satellite"
+
+[project.scripts]
+hivemind-mic-sat = "hivemind_mic_sat:run"
+
+[tool.setuptools]
+packages = ["hivemind_mic_sat"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+hivemind_mic_sat = ["res/snd/*.wav", "res/snd/*.mp3"]
+
+[tool.setuptools.dynamic]
+version = { attr = "hivemind_mic_sat.version.__version__" }
+dependencies = { file = ["requirements.txt"] }
