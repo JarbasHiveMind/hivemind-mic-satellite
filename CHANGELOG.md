@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.8.0a4](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.8.0a4) (2026-06-23)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.8.0a3...0.8.0a4)
+
+**Merged pull requests:**
+
+- test\(e2e\): refresh hivescope pin 0.3.0a1→0.5.0a2; move policy pins into pyproject [\#42](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/42) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.8.0a3](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.8.0a3) (2026-06-05)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.8.0a2...0.8.0a3)
+
+**Merged pull requests:**
+
+- Update dependency hivescope to v0.3.0a3 [\#38](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/38) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.8.0a2](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.8.0a2) (2026-06-05)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.8.0a1...0.8.0a2)
