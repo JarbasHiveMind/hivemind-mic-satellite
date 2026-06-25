@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.0a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.9.0a1) (2026-06-25)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.8.0a4...0.9.0a1)
+
+**Merged pull requests:**
+
+- feat: modernize deps to bus-client 2.x, full CI suite, e2e + docs [\#45](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/45) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.8.0a4](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.8.0a4) (2026-06-23)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.8.0a3...0.8.0a4)
