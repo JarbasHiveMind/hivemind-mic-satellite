@@ -25,6 +25,8 @@ No local speech models are required. The device is essentially a smart microphon
 - [Configuration](configuration.md) — CLI flags, config file, plugins, audio devices
 - [Architecture](architecture.md) — on-device path, protocol, TTS playback, design trade-offs
 - [Deployment](deployment.md) — systemd, autostart, Raspberry Pi Zero hardware notes
+- [Dependencies](dependencies.md) — runtime + e2e deps and the bus-client 2.x story
+- [Testing](testing.md) — the e2e suite, how hardware is mocked, running tests
 - [Troubleshooting](troubleshooting.md) — common failure modes and fixes
 
 ---
