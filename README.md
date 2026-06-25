@@ -132,6 +132,8 @@ Full zero-to-hero documentation is in [docs/](docs/):
 - [Configuration reference](docs/configuration.md)
 - [Architecture (advanced)](docs/architecture.md)
 - [Deployment (systemd, Raspberry Pi)](docs/deployment.md)
+- [Dependencies & the bus-client 2.x story](docs/dependencies.md)
+- [Testing (e2e suite, mocked hardware)](docs/testing.md)
 - [Troubleshooting](docs/troubleshooting.md)
 
 ---

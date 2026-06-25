@@ -10,6 +10,8 @@ jobs:
     uses: OpenVoiceOS/gh-automations/.github/workflows/build-tests.yml@dev
     with:
       python_versions: '["3.10", "3.11", "3.12", "3.13"]'
-      # version policy is in pyproject (the `test` extra); no pre_install pins here.
-      install_extras: 'test'
-      test_path: 'tests/'
+      # Build + clean-install verification across all supported Pythons.
+      # Dep version policy lives in pyproject.toml; the bus-client 2.x stack and
+      # its pre-release floors resolve from the `e2e` extra without --pre.
+      # The e2e suite itself runs in e2e_tests.yml (single Python, faster).
+      install_extras: 'e2e'
