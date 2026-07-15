@@ -174,6 +174,15 @@ def test_microphone_stream_reaches_hub_binary():
         client.running = False
         run_thread.join(timeout=5)
 
+        # let in-flight frames drain: a frame can be on the wire (counted by
+        # the recorder) before the binary handler has processed it, which
+        # makes an immediate exact-count comparison racy
+        prev = -1
+        drain_deadline = time.time() + 5
+        while time.time() < drain_deadline and len(m.binary_protocol.calls) != prev:
+            prev = len(m.binary_protocol.calls)
+            time.sleep(0.3)
+
         assert m.binary_protocol.calls, \
             "no RAW_AUDIO binary frames reached the hub"
         assert_binary_delivered(m, count=len(m.binary_protocol.calls))
