@@ -130,9 +130,36 @@ If `ovos-PHAL` is installed, the satellite starts it automatically using the Hiv
 pip install ovos-PHAL
 ```
 
-### TTS Transformers
+### Transformer pipelines
 
 TTS transformers mutate TTS audio before playback, for example changing speed or applying a filter. See [TTS Transformer Plugins](https://openvoiceos.github.io/ovos-technical-manual/audio_service/#transformer-plugins).
+
+The satellite runs OVOS transformer plugins on-device, opt-in via this
+device's `mycroft.conf`:
+
+- **`audio_transformers`** — applied per chunk to microphone audio before it
+  is streamed to the server (e.g. denoise for a noisy room or a bad mic).
+- **`tts_transformers`** — applied to received TTS audio before playback
+  (e.g. a per-device speed change, pitch effect or loudness fix).
+
+```json
+{
+  "tts_transformers": {
+    "ovos-tts-transformer-sox-plugin": {"pitch": 300}
+  }
+}
+```
+
+Use device-side transformers for **per-device** effects. Fleet-wide effects
+belong on the server instead: hivemind-audio-binary-protocol can run audio
+transformers for every satellite, and enabling e.g. a dialog transformer on
+the server means the TTS you receive says **different text than the skill
+produced** — deliberate when centralizing a tone/persona, surprising if you
+forgot it's on. Never enable the same plugin on both the satellite and the
+server, or the effect is applied twice.
+
+See the [ovos-plugin-manager transformer docs](https://github.com/OpenVoiceOS/ovos-plugin-manager/blob/dev/docs/transformers.md)
+for the full contract.
 
 ### G2P (Grapheme-to-Phoneme)
 
