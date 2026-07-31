@@ -48,9 +48,9 @@ journalctl -u hivemind-mic-sat -f
 
 ## Passing credentials to the service
 
-**Option 1 — identity file (recommended):** run `hivemind-client set-identity ...` as the service user before starting the service. The file is read automatically.
+**Option 1: identity file (recommended):** run `hivemind-client set-identity ...` as the service user before you start the service. The satellite reads the file automatically.
 
-**Option 2 — environment variables in the unit:**
+**Option 2: environment variables in the unit:**
 
 ```ini
 [Service]
@@ -66,11 +66,11 @@ Or use `EnvironmentFile=/etc/hivemind-mic-sat.env` to keep secrets out of the un
 
 ## Raspberry Pi Zero notes
 
-The Raspberry Pi Zero (and Zero 2 W) is the target hardware for this satellite.
+The Raspberry Pi Zero, and the Zero 2 W, are the target hardware for this satellite.
 
 ### Recommended OS
 
-Raspberry Pi OS Lite (64-bit for Zero 2 W; 32-bit for Zero W). Install Python 3.10+ via the official packages or `deadsnakes` PPA.
+Raspberry Pi OS Lite (64-bit for Zero 2 W; 32-bit for Zero W). Install Python 3.10 or later through the official packages or the `deadsnakes` PPA.
 
 ### Audio hardware
 
@@ -79,11 +79,11 @@ The Pi Zero has no built-in audio output. Common options:
 | Option | Notes |
 |---|---|
 | USB audio dongle | Cheapest; plug-and-play |
-| I2S DAC HAT (e.g. pHAT DAC, IQaudio) | Better quality; requires device tree overlay |
+| I2S DAC HAT (for example pHAT DAC, IQaudio) | Better quality; requires a device tree overlay |
 | USB microphone + speaker combo | Single device, simplest wiring |
 | ReSpeaker 2-mic HAT | Microphone array, built-in speaker output |
 
-Identify ALSA devices after connecting hardware:
+Identify ALSA devices after you connect hardware:
 
 ```bash
 arecord -l   # input devices
@@ -105,14 +105,14 @@ Replace `1` with the card number from `arecord -l`.
 
 ### Performance tips
 
-- Use `ovos-vad-plugin-webrtcvad` instead of Silero on a Zero W (less CPU).
+- Use `ovos-vad-plugin-webrtcvad` instead of Silero on a Zero W to use less CPU.
 - Disable unnecessary services on the Pi to free RAM.
 - Avoid running a desktop environment on the satellite.
-- The satellite uses roughly 40–80 MB RAM under typical load (mic + VAD + WebSocket client).
+- The satellite uses roughly 40-80 MB RAM under typical load (mic + VAD + WebSocket client).
 
 ### Network
 
-Wi-Fi works on Pi Zero W and Zero 2 W. For latency-sensitive deployments, a USB-to-Ethernet adapter is more reliable.
+Wi-Fi works on the Pi Zero W and Zero 2 W. For latency-sensitive deployments, a USB-to-Ethernet adapter is more reliable.
 
 ---
 
@@ -150,4 +150,7 @@ COPY mycroft.conf /root/.config/mycroft/mycroft.conf
 CMD ["hivemind-mic-sat", "--host", "host.docker.internal"]
 ```
 
-Note: ALSA device passthrough (`--device /dev/snd`) is required for audio access inside Docker.
+Note: audio access inside Docker requires ALSA device passthrough (`--device /dev/snd`).
+
+---
+[← Architecture](architecture.md) · [Home](index.md) · [Testing →](testing.md)

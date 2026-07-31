@@ -10,11 +10,11 @@ All flags are optional. If a flag is omitted, the value is read from the identit
 |---|---|---|---|
 | `--key` | string | identity file | HiveMind access key |
 | `--password` | string | identity file | HiveMind password |
-| `--host` | string | identity file | HiveMind host (e.g. `192.168.1.10` or `wss://myhive.example.com`). `ws://` is prepended automatically if no scheme is given. |
+| `--host` | string | identity file | HiveMind host (for example `192.168.1.10` or `wss://myhive.example.com`). The client adds `ws://` automatically if you give no scheme. |
 | `--port` | int | identity file or `5678` | HiveMind WebSocket port |
 | `--siteid` | string | identity file or `unknown` | Location identifier added to `message.context` |
 
-Example — connect to a remote hive with explicit credentials:
+Example: connect to a remote hive with explicit credentials:
 
 ```bash
 hivemind-mic-sat \
@@ -47,7 +47,7 @@ All plugin settings live here. The file is JSON.
 
 ## Microphone plugins
 
-A microphone plugin is **required**. Set it in `mycroft.conf`:
+A microphone plugin is required. Set it in `mycroft.conf`:
 
 ```json
 {
@@ -85,7 +85,7 @@ Use the card/device index in the plugin config. Example for card 1, device 0:
 
 | Plugin | Install | Notes |
 |---|---|---|
-| `ovos-microphone-plugin-alsa` | `pip install ovos-microphone-plugin-alsa` | Linux ALSA — default |
+| `ovos-microphone-plugin-alsa` | `pip install ovos-microphone-plugin-alsa` | Linux ALSA: default |
 | `ovos-microphone-plugin-pyaudio` | `pip install ovos-microphone-plugin-pyaudio` | Cross-platform |
 | `ovos-microphone-plugin-sounddevice` | `pip install ovos-microphone-plugin-sounddevice` | Alternative cross-platform |
 
@@ -95,7 +95,7 @@ Full list: [OVOS Microphone Plugins](https://openvoiceos.github.io/ovos-technica
 
 ## VAD plugins
 
-A VAD (Voice Activity Detection) plugin is **required**. It determines when audio contains speech, controlling when chunks are streamed to the hive.
+A VAD (voice activity detection) plugin is required. It determines when audio contains speech, and controls when the satellite streams chunks to the hive.
 
 ```json
 {
@@ -107,7 +107,7 @@ A VAD (Voice Activity Detection) plugin is **required**. It determines when audi
 
 ### Silence threshold
 
-The satellite stops streaming after `6 seconds` of continuous silence (hardcoded in the run loop). This is the `max_silence_duration` value in `hivemind_mic_sat/__init__.py`.
+The satellite stops streaming after 6 seconds of continuous silence, hardcoded in the run loop as the `max_silence_duration` value in `hivemind_mic_sat/__init__.py`.
 
 ### Available VAD plugins
 
@@ -124,7 +124,7 @@ Full list: [OVOS VAD Plugins](https://openvoiceos.github.io/ovos-technical-manua
 
 ### PHAL (Platform/Hardware Abstraction Layer)
 
-If `ovos-PHAL` is installed, it is started automatically using the HiveMind bus. Used for hardware integrations such as LED rings, buttons, or display updates on devices like the Mycroft Mark 1/2.
+If `ovos-PHAL` is installed, the satellite starts it automatically using the HiveMind bus. PHAL supports hardware integrations such as LED rings, buttons, or display updates on devices like the Mycroft Mark 1/2.
 
 ```bash
 pip install ovos-PHAL
@@ -132,29 +132,27 @@ pip install ovos-PHAL
 
 ### TTS Transformers
 
-Mutate TTS audio before playback (e.g. speed change, filtering).  
-See [TTS Transformer Plugins](https://openvoiceos.github.io/ovos-technical-manual/audio_service/#transformer-plugins).
+TTS transformers mutate TTS audio before playback, for example changing speed or applying a filter. See [TTS Transformer Plugins](https://openvoiceos.github.io/ovos-technical-manual/audio_service/#transformer-plugins).
 
 ### G2P (Grapheme-to-Phoneme)
 
-Generates visemes for mouth movement animations (e.g. Mycroft Mk1 faceplate).  
-See [G2P Plugins](https://openvoiceos.github.io/ovos-technical-manual/g2p_plugins/).
+G2P plugins generate visemes for mouth movement animations, for example on the Mycroft Mk1 faceplate. See [G2P Plugins](https://openvoiceos.github.io/ovos-technical-manual/g2p_plugins/).
 
 ### Media Playback / OCP
 
-Enables voice-commanded media playback ("Play some jazz").
+These plugins enable voice-commanded media playback, for example "play some jazz".
 
 ```bash
 pip install ovos-ocp-audio-plugin
 ```
 
-Configure in `mycroft.conf` under `"Audio"` and `"OCP"`. See [Media Plugins](https://openvoiceos.github.io/ovos-technical-manual/media_plugins/) and [OCP Plugins](https://openvoiceos.github.io/ovos-technical-manual/ocp_plugins/).
+Configure these plugins in `mycroft.conf` under `"Audio"` and `"OCP"`. See [Media Plugins](https://openvoiceos.github.io/ovos-technical-manual/media_plugins/) and [OCP Plugins](https://openvoiceos.github.io/ovos-technical-manual/ocp_plugins/).
 
 ---
 
 ## TTS audio transport
 
-By default the satellite requests TTS as a binary audio stream from the hive (`speak:synth`). If your hive does not support binary transport, set `prefer_b64=True` in code or use the `speak:b64_audio` path — base64-encoded WAV is then requested and decoded locally. The `prefer_b64` path is selectable when constructing `HiveMindMicrophoneClient` programmatically; the CLI always defaults to binary.
+By default the satellite requests TTS as a binary audio stream from the hive (`speak:synth`). If your hive does not support binary transport, set `prefer_b64=True` in code, or use the `speak:b64_audio` path, which requests base64-encoded WAV audio and decodes it locally. You can select the `prefer_b64` path when you construct `HiveMindMicrophoneClient` programmatically. The CLI always defaults to binary.
 
 ---
 
@@ -173,3 +171,6 @@ By default the satellite requests TTS as a binary audio stream from the hive (`s
   }
 }
 ```
+
+---
+[← Getting started](getting-started.md) · [Home](index.md) · [Architecture →](architecture.md)
