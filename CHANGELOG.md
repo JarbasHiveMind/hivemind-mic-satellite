@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.0a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.0a1) (2026-08-10)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.9.0a3...0.10.0a1)
+
+**Merged pull requests:**
+
+- feat: client-side audio and tts transformer pipelines [\#47](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/47) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.9.0a3](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.9.0a3) (2026-08-10)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.9.0a2...0.9.0a3)
