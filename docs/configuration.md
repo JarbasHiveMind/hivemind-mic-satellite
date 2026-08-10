@@ -4,7 +4,7 @@
 
 ## CLI flags
 
-All flags are optional. If a flag is omitted, the value is read from the identity file (`~/.local/share/hivemind-client/identity.json`).
+All flags are optional. If a flag is omitted, the value is read from the identity file (`~/.config/hivemind/_identity.json`).
 
 | Flag | Type | Default | Description |
 |---|---|---|---|
@@ -29,7 +29,7 @@ hivemind-mic-sat \
 
 ## Identity file
 
-`hivemind-client set-identity` writes `~/.local/share/hivemind-client/identity.json`. All fields correspond to the CLI flags above. Once set, you can run `hivemind-mic-sat` with no arguments.
+`hivemind-client set-identity` writes `~/.config/hivemind/_identity.json`. All fields correspond to the CLI flags above. Once set, you can run `hivemind-mic-sat` with no arguments.
 
 ---
 
