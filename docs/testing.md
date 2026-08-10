@@ -38,7 +38,7 @@ The satellite touches three hardware seams. Each is replaced in-process with no 
 - **VAD**: a patch replaces `OVOSVADFactory.create` with a `FakeVAD` that reports speech for the first N reads, then silence, driving the speech-start → stream → silence-timeout branch of `run()`.
 - **Audio playback**: the client is constructed with `enable_media=False`, so no `AudioService` (and no sound device) is created, and `PHAL` is absent. The `PlaybackThread` never starts; the tests inspect queued playback items directly instead of reaching a speaker.
 
-Everything else is genuine production code: the VAD-gated capture loop, encryption, the `HiveMessageBusClient`, the WebSocket transport, the `hivemind-core` listener, the binary protocol, the agent bus, and the policy chain.
+Everything else is genuine production code: the VAD-gated capture loop, encryption, the `HiveMessageBusClient`, the WebSocket transport, `hivemind-core`, the binary protocol, the agent bus, and the policy chain.
 
 ## CI
 
