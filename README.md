@@ -151,3 +151,26 @@ Full documentation is in [docs/](docs/):
 ## License
 
 Apache-2.0: see [LICENSE](LICENSE).
+
+## Transformer pipelines
+
+The satellite can run OVOS transformer plugins client-side, configured in
+this device's `mycroft.conf`:
+
+- `audio_transformers` — applied per chunk to microphone audio before it is
+  streamed to the server (e.g. denoise).
+- `tts_transformers` — applied to received TTS audio before playback (e.g.
+  per-device sound effects).
+
+```json
+{
+  "tts_transformers": {
+    "ovos-tts-transformer-sox-plugin": {"pitch": 300}
+  }
+}
+```
+
+Loading is opt-in: a plugin only runs if named in its section. **Avoid
+double-processing**: if the HiveMind server also enables the same pipeline
+(hivemind-audio-binary-protocol runs audio transformers server-side), the
+audio gets processed twice — enable each plugin on exactly one side.
