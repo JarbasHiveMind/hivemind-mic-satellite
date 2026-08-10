@@ -103,6 +103,7 @@ See [docs/configuration.md](docs/configuration.md) for all options, plugin selec
 | Microphone | Yes | Captures audio from hardware |
 | VAD | Yes | Detects voice activity, decides when to stream |
 | PHAL | No | Platform/hardware abstraction (for example LEDs, buttons) |
+| Audio Transformers | No | Mutate microphone audio per chunk before it is streamed |
 | TTS Transformers | No | Mutate TTS audio before playback |
 | G2P | No | Visemes for mouth movement (for example Mycroft Mk1) |
 | Media Playback | No | Media commands such as "play Metallica" |
@@ -117,7 +118,7 @@ See [docs/configuration.md](docs/configuration.md) for all options, plugin selec
 - Wakeword detection
 - Continuous listening, hybrid listening, sleep mode, recording mode
 - Multiple wakewords
-- Audio and dialog transformer plugins
+- Dialog transformer plugins
 
 ---
 

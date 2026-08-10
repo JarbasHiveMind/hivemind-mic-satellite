@@ -65,7 +65,7 @@ When the hive sends a `speak` message:
 
 ## Session and identity
 
-- Each satellite has a `NodeIdentity`, stored in `~/.local/share/hivemind-client/identity.json`, with an `access_key`, `password`, `default_master` (host), and an optional `site_id`.
+- Each satellite has a `NodeIdentity`, stored in `~/.config/hivemind/_identity.json`, with an `access_key`, `password`, `default_master` (host), and an optional `site_id`.
 - The `site_id` / `--siteid` flag is injected into `message.context` so the hive knows which physical location the audio came from.
 - A `Session` is created locally (`FakeBus(session=Session())`) and shared between the internal bus and the playback thread for message routing.
 

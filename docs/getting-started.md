@@ -59,7 +59,7 @@ hivemind-client set-identity \
   --host <hive-ip-or-hostname>
 ```
 
-The identity is written to `~/.local/share/hivemind-client/identity.json`. The `hivemind-mic-sat` command reads it automatically on startup.
+The identity is written to `~/.config/hivemind/_identity.json`. The `hivemind-mic-sat` command reads it automatically on startup.
 
 **Option B: pass credentials on the command line:**
 
