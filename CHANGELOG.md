@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.0a3](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.9.0a3) (2026-08-10)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.9.0a2...0.9.0a3)
+
+**Merged pull requests:**
+
+- docs: drop misleading listener terminology [\#50](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/50) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.9.0a2](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.9.0a2) (2026-07-31)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.9.0a1...0.9.0a2)
