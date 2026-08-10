@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.0a3](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.0a3) (2026-08-10)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.0a2...0.10.0a3)
+
+**Merged pull requests:**
+
+- docs: correct claims that no longer match the code [\#55](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/55) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.10.0a2](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.0a2) (2026-08-10)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.0a1...0.10.0a2)
