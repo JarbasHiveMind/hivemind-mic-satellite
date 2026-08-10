@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.0a2](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.0a2) (2026-08-10)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.0a1...0.10.0a2)
+
+**Merged pull requests:**
+
+- chore\(ci\): drop the broken, redundant Dependabot config [\#53](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/53) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.10.0a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.0a1) (2026-08-10)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.9.0a3...0.10.0a1)
