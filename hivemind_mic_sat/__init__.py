@@ -7,7 +7,11 @@ import click
 from ovos_audio.audio import AudioService
 from ovos_audio.playback import PlaybackThread as _PT
 from ovos_bus_client.message import Message
+from ovos_bus_client.session import Session
+from ovos_config import Configuration
 from ovos_plugin_manager.microphone import OVOSMicrophoneFactory, Microphone
+from ovos_plugin_manager.transformer_services import (AudioTransformersService,
+                                                      TTSTransformersService)
 from ovos_plugin_manager.utils.tts_cache import hash_sentence
 from ovos_plugin_manager.vad import OVOSVADFactory, VADEngine
 from ovos_utils.fakebus import FakeBus
@@ -35,8 +39,10 @@ class PlaybackThread(_PT):
 
 
 class TTSHandler(BinaryDataCallbacks):
-    def __init__(self, playback: PlaybackThread):
+    def __init__(self, playback: PlaybackThread,
+                 tts_transformers: Optional[TTSTransformersService] = None):
         self.playback: PlaybackThread = playback
+        self.tts_transformers = tts_transformers
         super().__init__()
 
     def handle_receive_tts(self, bin_data: bytes,
@@ -48,6 +54,10 @@ class TTSHandler(BinaryDataCallbacks):
         with open(wav, "wb") as f:
             f.write(bin_data)
 
+        # client-side tts transformers (e.g. per-device sound effects)
+        if self.tts_transformers and self.tts_transformers.plugins:
+            wav, _ = self.tts_transformers.transform(wav, {"lang": lang})
+
         # queue audio for playback
         m = Message("speak", {"utterance": utterance, "lang": lang})
         # message is optional, allows G2P plugin to create mouth movements if configured
@@ -57,13 +67,37 @@ class TTSHandler(BinaryDataCallbacks):
 class HiveMindMicrophoneClient:
 
     def __init__(self, prefer_b64=False, enable_media=True, **kwargs):
+        """
+        Initialize the HiveMindMicrophoneClient: configure messaging, playback, microphone, VAD, optional media service, event handlers, and auxiliary services.
+        
+        Parameters:
+            prefer_b64 (bool): If True, prefer base64-encoded audio for TTS responses.
+            enable_media (bool): If True, attempt to initialize an AudioService for media playback; failure disables media support.
+            **kwargs: Additional keyword arguments forwarded to the HiveMessageBusClient constructor (e.g., connection credentials and identity).
+        
+        Notes:
+            - Creates an internal FakeBus bound to a Session and a PlaybackThread for local audio playback.
+            - Instantiates a HiveMessageBusClient with a TTS handler and waits for it to connect.
+            - Creates microphone and VAD engine instances and registers handlers for recognizer, TTS, playback, and utterance events.
+            - Attempts to initialize PHAL and starts it if available; if PHAL is not importable it is set to None.
+            - Sets instance attributes: prefer_b64, playback, hm_bus, mic, vad, audio, running, and phal.
+        """
         self.prefer_b64 = prefer_b64
-        internal = FakeBus()
+        internal = FakeBus(session=Session())
         self.playback: PlaybackThread = PlaybackThread(bus=internal,
                                                        queue=Queue())
-        self.hm_bus = HiveMessageBusClient(bin_callbacks=TTSHandler(self.playback),
-                                           internal_bus=internal, **kwargs)
-        self.hm_bus.connect(FakeBus())
+        # transformer pipelines: config-gated and opt-in via this device's
+        # mycroft.conf "audio_transformers" / "tts_transformers" sections.
+        # NOTE: if the hivemind server also enables the same pipeline, audio
+        # gets processed twice — enable each plugin on exactly one side.
+        self.audio_transformers = AudioTransformersService(
+            config=Configuration().get("audio_transformers") or {})
+        self.tts_transformers = TTSTransformersService(
+            config=Configuration().get("tts_transformers") or {})
+        self.hm_bus = HiveMessageBusClient(
+            bin_callbacks=TTSHandler(self.playback, self.tts_transformers),
+            internal_bus=internal, **kwargs)
+        self.hm_bus.connect()
         self.hm_bus.connected_event.wait()
         LOG.info("== connected to HiveMind")
         self.mic: Microphone = OVOSMicrophoneFactory.create()
@@ -139,6 +173,9 @@ class HiveMindMicrophoneClient:
         with open(audio_file, "wb") as f:
             f.write(pybase64.b64decode(b64data))
         LOG.info(f"TTS: {audio_file}")
+        if self.tts_transformers.plugins:
+            audio_file, _ = self.tts_transformers.transform(
+                audio_file, {"lang": message.data.get("lang")})
         self.playback.put(audio_file,
                           listen=message.data.get("listen"),
                           message=message)
@@ -173,6 +210,10 @@ class HiveMindMicrophoneClient:
                     in_speech = True
 
             if in_speech:
+                if self.audio_transformers.plugins:
+                    # client-side audio transformers (e.g. denoise) applied
+                    # per chunk before streaming to the server
+                    chunk, _ = self.audio_transformers.transform(chunk)
                 self.hm_bus.emit(
                     HiveMessage(msg_type=HiveMessageType.BINARY, payload=chunk),
                     binary_type=HiveMindBinaryPayloadType.RAW_AUDIO
