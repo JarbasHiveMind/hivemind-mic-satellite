@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.0a4](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.0a4) (2026-08-15)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.0a3...0.10.0a4)
+
+**Merged pull requests:**
+
+- docs: add AGENTS.md with per-repo agent conventions [\#57](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/57) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.10.0a3](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.0a3) (2026-08-10)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.0a2...0.10.0a3)
