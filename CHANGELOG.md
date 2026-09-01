@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.1a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.1a1) (2026-09-01)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.0a4...0.10.1a1)
+
+**Merged pull requests:**
+
+- fix\(deps\): raise floor pins to proven HiveMind stack [\#59](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/59) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.10.0a4](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.0a4) (2026-08-15)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.0a3...0.10.0a4)
