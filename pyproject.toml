@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hivemind-mic-satellite"
+description = "Remote microphone for HiveMind"
+readme = "README.md"
+authors = [{ name = "jarbasAI", email = "jarbasai@mailfence.com" }]
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+dynamic = ["version"]
+dependencies = [
+    "click",
+    "pybase64",
+    # ovos-bus-client 2.x support lives in the ovos pre-releases; pin the
+    # pre-release floors so the resolver picks the 2.x-compatible alphas
+    # (the latest stables of ovos-audio/ovos-plugin-manager still cap
+    # ovos-bus-client<2.0.0).
+    "ovos-bus-client>=2.9.1a1,<3.0.0",
+    "ovos-plugin-manager>=2.11.6a1,<3.0.0",
+    "ovos-audio>=1.2.3a1,<2.0.0",
+    "hivemind-bus-client>=1.0.16a1",
+]
+
+[project.optional-dependencies]
+# End-to-end tests: a real hivemind-core master + this satellite over a real
+# HiveMessageBusClient, driven by the hivescope harness. The satellite runtime
+# floors the same ovos-bus-client 2.x pre-releases as hivemind-core, so the
+# whole graph resolves on the 2.x world. hivemind-core's transitive
+# pre-release floors (json-database / hivemind-sqlite-database /
+# hivemind-json-db-plugin /
+# ovos-utils / ovos-workshop) are restated here so uv/pip pick them WITHOUT
+# --pre (a pre-release min-version pin is enough).
+e2e = [
+    "pytest",
+    "pytest-timeout",
+    "hivescope>=0.8.0a1",
+    "hivemind-core>=4.13.18a1",
+    "hivemind-ovos-agent-plugin>=0.3.10a1",
+    "hivemind-plugin-manager>=0.9.0a7",
+    "json-database>=1.0.4a1",
+    "hivemind-sqlite-database>=0.4.3a5",
+    "hivemind-json-db-plugin>=0.0.4a7",
+    "hivemind-websocket-protocol>=0.2.9a1",
+    "ovos-utils>=0.13.15a1",
+    "ovos-workshop>=8.0.0a1",
+]
+# Back-compat alias: the shared CI workflows historically install the `test`
+# extra; keep it pointing at the e2e set.
+test = ["hivemind-mic-satellite[e2e]"]
+
+[project.urls]
+Homepage = "https://github.com/JarbasHiveMind/hivemind-mic-satellite"
+
+[project.scripts]
+hivemind-mic-sat = "hivemind_mic_sat:run"
+
+[tool.setuptools]
+packages = ["hivemind_mic_sat"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+hivemind_mic_sat = ["res/snd/*.wav", "res/snd/*.mp3"]
+
+[tool.setuptools.dynamic]
+version = { attr = "hivemind_mic_sat.version.__version__" }
