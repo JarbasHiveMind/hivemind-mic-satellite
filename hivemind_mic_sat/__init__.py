@@ -189,6 +189,7 @@ class HiveMindMicrophoneClient:
         self.playback.start()
 
         chunk_duration = self.mic.chunk_size / self.mic.sample_rate  # time (in seconds) per chunk
+        audio_metadata = {"sample_rate": self.mic.sample_rate, "sample_width": self.mic.sample_width}
         total_silence_duration = 0.0  # in seconds
         in_speech = False
         max_silence_duration = 6  # silence duration limit in seconds
@@ -215,7 +216,8 @@ class HiveMindMicrophoneClient:
                     # per chunk before streaming to the server
                     chunk, _ = self.audio_transformers.transform(chunk)
                 self.hm_bus.emit(
-                    HiveMessage(msg_type=HiveMessageType.BINARY, payload=chunk),
+                    HiveMessage(msg_type=HiveMessageType.BINARY, payload=chunk,
+                                metadata=audio_metadata),
                     binary_type=HiveMindBinaryPayloadType.RAW_AUDIO
                 )
                 # reached the max allowed silence time, stop sending audio
