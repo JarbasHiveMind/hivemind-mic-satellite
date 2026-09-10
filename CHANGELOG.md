@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.2a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.2a1) (2026-09-10)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.1a1...0.10.2a1)
+
+**Merged pull requests:**
+
+- fix: send sample\_rate and sample\_width with RAW\_AUDIO frames [\#61](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/61) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.10.1a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.1a1) (2026-09-01)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.0a4...0.10.1a1)
