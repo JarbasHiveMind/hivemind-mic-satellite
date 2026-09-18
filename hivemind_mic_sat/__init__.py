@@ -243,7 +243,7 @@ class HiveMindMicrophoneClient:
 @click.option("--siteid", help="location identifier for message.context  (default read from identity file)", type=str,
               default="")
 def run(key: str, password: str, host: str, port: int, siteid: str):
-    identity = NodeIdentity()
+    identity = NodeIdentity(app_name="mic-satellite")
     password = password or identity.password
     key = key or identity.access_key
     host = host or identity.default_master
