@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.3a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.3a1) (2026-09-19)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.2a1...0.10.3a1)
+
+**Merged pull requests:**
+
+- fix: the satellite keeps its own HiveMind identity \(CRYPTO-1 §2\) [\#63](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/63) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.10.2a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.2a1) (2026-09-10)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.1a1...0.10.2a1)
