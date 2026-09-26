@@ -15,3 +15,7 @@ jobs:
       # its pre-release floors resolve from the `e2e` extra without --pre.
       # The e2e suite itself runs in e2e_tests.yml (single Python, faster).
       install_extras: 'e2e'
+      # Without test_path the reusable workflow skips its Run Tests step
+      # entirely (it is gated on `inputs.test_path != ''`) and still reports
+      # success, so this job built and installed the wheel and ran no test.
+      test_path: 'tests'
