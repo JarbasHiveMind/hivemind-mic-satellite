@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.4a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.4a1) (2026-11-13)
+
+[Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.3a1...0.10.4a1)
+
+**Merged pull requests:**
+
+- fix\(ci\): set test\_path so the build test actually runs the tests [\#65](https://github.com/JarbasHiveMind/hivemind-mic-satellite/pull/65) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.10.3a1](https://github.com/JarbasHiveMind/hivemind-mic-satellite/tree/0.10.3a1) (2026-09-19)
 
 [Full Changelog](https://github.com/JarbasHiveMind/hivemind-mic-satellite/compare/0.10.2a1...0.10.3a1)
