@@ -1,4 +1,0 @@
-include requirements.txt
-include README.md
-include CHANGELOG.md
-recursive-include hivemind_mic_sat/res/snd *.wav *.mp3
